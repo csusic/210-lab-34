@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 using namespace std;
 
 const int SIZE = 7;
@@ -36,17 +37,36 @@ public:
         }
     }
     
-    //depth first search
+    // --- Depth First Search (Recursive) ---
     void DFS(int v, vector<bool> &visited) {
-        // Mark the current node as visited and print it
         visited[v] = true;
         cout << v << " ";
 
-        // Recur for all the vertices adjacent to this vertex
         for (Pair neighbor : adjList[v]) {
-            int u = neighbor.first;
-            if (!visited[u]) {
-                DFS(u, visited);
+            if (!visited[neighbor.first]) {
+                DFS(neighbor.first, visited);
+            }
+        }
+    }
+
+    // --- Breadth First Search (Iterative) ---
+    void BFS(int startNode) {
+        vector<bool> visited(SIZE, false);
+        queue<int> q;
+
+        visited[startNode] = true;
+        q.push(startNode);
+
+        while (!q.empty()) {
+            int v = q.front();
+            q.pop();
+            cout << v << " ";
+
+            for (Pair neighbor : adjList[v]) {
+                if (!visited[neighbor.first]) {
+                    visited[neighbor.first] = true;
+                    q.push(neighbor.first);
+                }
             }
         }
     }
@@ -76,11 +96,13 @@ int main() {
     // Prints adjacency list representation of graph
     graph.printGraph();
     
-    cout << "DFS starting from vertex 0: " << endl;
+    cout << "\nDFS starting from vertex 0: " << endl;
     vector<bool> visited(SIZE, false);
     graph.DFS(0, visited);
-    cout << endl;
-    cout << "BFS starting from vertex 0: " << endl;
 
+    cout << "\nBFS starting from vertex 0: " << endl;
+    graph.BFS(0);
+    cout << endl;
+  
     return 0;
 }
