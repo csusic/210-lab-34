@@ -151,9 +151,8 @@ public:
         }
     }
 }
-
     // Print the graph's adjacency list
-    void printGraph() {
+    /*void printGraph() {
         cout << "Graph's adjacency list:" << endl;
         for (int i = 0; i < adjList.size(); i++) {
             cout << i << " --> ";
@@ -161,7 +160,40 @@ public:
                 cout << "(" << v.first << ", " << v.second << ") ";
             cout << endl;
         }
+    }*/
+    
+     void printGraph() {
+        cout << "Water Pipeline Network Topology:" << endl;
+        cout << "================================" << endl;
+        for (int i = 0; i < adjList.size(); i++) {
+            cout << "Junction " << i;
+            if (i == 0) cout << " (Pump Station)";
+            cout << " connects to:" << endl;
+            
+            if (adjList[i].empty()) {
+                cout << "  → No outgoing pipes" << endl;
+            }
+
+            for (Pair v : adjList[i])
+                cout << "  → Junction " << v.first 
+                     << " (Capacity: " << v.second << " GPM)" << endl;
+            cout << endl;
+        }
     }
+    
+    void printGraph(const vector<vector<Pair>>& adjList) {
+    cout << "Graph's adjacency list (Water Network):" << endl;
+    for (int i = 0; i < adjList.size(); i++) {
+        cout << "Junction " << i << " connects to:" << endl;
+        if (adjList[i].empty()) {
+            cout << "  → No connections" << endl;
+        }
+        for (const Pair& v : adjList[i]) {
+            cout << "  → Junction " << v.first 
+                 << " (Capacity: " << v.second << " GPM)" << endl;
+        }
+    }
+}
 };
 
 int main() {
