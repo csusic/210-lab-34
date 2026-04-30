@@ -144,6 +144,8 @@ int main() {
     cout << "\nBFS starting from vertex 0: " << endl;
     graph.BFS(0);
     cout << endl;
+    
+    graph.shortestPath(0);
   
     return 0;
 }
