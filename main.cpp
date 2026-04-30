@@ -46,10 +46,16 @@ public:
         visited[startNode] = true;
         q.push(startNode);
 
+        cout << "\nCheck route spread (BFS) from Hub 0" << endl;
+        cout << "================================" << endl;
         while (!q.empty()) {
             int v = q.front();
             q.pop();
-
+            cout << "Checking from Hub " << v << endl;
+            for (Pair v : adjList[v]) {
+                cout << "  → Next route available: " << v.first 
+                     << " - Transit Time: " << v.second << " min" << endl;
+            }
             for (Pair neighbor : adjList[v]) {
                 if (!visited[neighbor.first]) {
                     visited[neighbor.first] = true;
@@ -57,63 +63,20 @@ public:
                 }
             }
         }
-        
-        cout << "\nCheck route spread (BFS) from Hub 0" << endl;
-        cout << "================================" << endl;
-        for (int i = 0; i < adjList.size(); i++) {
-            cout << "Checking from Hub " << i;
-            if (i == 0) cout << " (Central Facility)";
-            if (i == 1) cout << " (North Suburban Depot)";
-            if (i == 2) cout << " (West Industrial Park)";
-            if (i == 3) cout << " (Downtown Center)";
-            if (i == 4) cout << " (East Port Terminal)";
-            if (i == 5) cout << " (Airport)";
-            if (i == 6) cout << " (South Pier)";
-            cout << endl;
-            
-            if (adjList[i].empty()) {
-                cout << "  → No data available" << endl;
-            }
-
-            for (Pair v : adjList[i])
-                cout << "  → Next route available: " << v.first 
-                     << " - Transit Time: " << v.second << " min" << endl;
-            cout << endl;
-        }
     }
     
     // --- Depth First Search (Recursive) ---
     void DFS(int v, vector<bool> &visited) {
         visited[v] = true;
-        cout << v << " ";
-
+        cout << "Routing from Hub " << v << endl;
+        for (Pair v : adjList[v]) {
+            cout << "  → Potential route to: " << v.first 
+                 << " - Transit Time: " << v.second << " min" << endl;
+        }
         for (Pair neighbor : adjList[v]) {
             if (!visited[neighbor.first]) {
                 DFS(neighbor.first, visited);
             }
-        }
-        
-        cout << "\nPlan bus route (DFS) from Hub 0" << endl;
-        cout << "================================" << endl;
-        for (int i = 0; i < adjList.size(); i++) {
-            cout << "Routing from Hub " << i;
-            if (i == 0) cout << " (Central Facility)";
-            if (i == 1) cout << " (North Suburban Depot)";
-            if (i == 2) cout << " (West Industrial Park)";
-            if (i == 3) cout << " (Downtown Center)";
-            if (i == 4) cout << " (East Port Terminal)";
-            if (i == 5) cout << " (Airport)";
-            if (i == 6) cout << " (South Pier)";
-            cout << endl;
-            
-            if (adjList[i].empty()) {
-                cout << "  → No data available" << endl;
-            }
-
-            for (Pair v : adjList[i])
-                cout << "  → Potential route to " << v.first 
-                     << " - Transit Time: " << v.second << " min" << endl;
-            cout << endl;
         }
     }
     
@@ -238,18 +201,16 @@ int main() {
 
     // Creates graph
     Graph graph(edges);
+    
     graph.printGraph();
-            
-         
     graph.BFS(0);
-           
     //DFS
+    cout << "\nPlan bus route (DFS) from Hub 0" << endl;
+    cout << "================================" << endl;
     vector<bool> visited(SIZE, false);
     graph.DFS(0, visited);
     
-    
-    
-    int choice;
+    /*int choice;
     do {
         cout << "\n--- Bus Transit System Menu ---" << endl;
         cout << "[1] Display bus transit system" << endl;
@@ -269,6 +230,8 @@ int main() {
                 graph.BFS(0);
                 break;
             case 3:
+                //cout << "\nPlan bus route (DFS) from Hub 0" << endl;
+                //cout << "================================" << endl;
                 graph.DFS(0, visited);
                 break;
             case 4:
@@ -283,7 +246,7 @@ int main() {
             default:
                 cout << "Invalid choice!" << endl;
         }
-    } while (choice != 0);
+    } while (choice != 0);*/
   
     return 0;
 }
