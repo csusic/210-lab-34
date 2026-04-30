@@ -1,4 +1,4 @@
-// COMSC-210 | Lab 34 | Christine Susic
+// COMSC-210 | Lab 34 | Christine Susi
 
 #include <iostream>
 #include <vector>
