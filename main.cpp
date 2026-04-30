@@ -155,7 +155,7 @@ public:
         for (int i = 0; i < SIZE; i++) {
             if (parent[i] != -1) {
                 cout << "Edge from " << parent[i] << " to " << i;
-                cout << " with capacity: " << key[i] << " units" << endl;
+                cout << " with transit time: " << key[i] << " min" << endl;
             }
         }
     }
@@ -193,7 +193,7 @@ int main() {
     vector<Edge> edges = {
         // (x, y, w) —> edge from x to y having weight w
         //delete two nodes and change weights
-        {0,1,11},{0,2,6},{2,6,4},{5,6,2},{4,5,7},{2,4,10},{2,5,7},
+        {0,1,11},{0,2,6},{2,6,4},{5,6,2},{4,6,7},{2,4,10},{2,5,7},
         //add six new nodes
         {0,4,9},{1,2,5},{2,3,3},{3,1,5},{3,4,7},{5,4,2}
         
