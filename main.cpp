@@ -152,7 +152,6 @@ public:
     }
 }
 
-
     // Print the graph's adjacency list
     void printGraph() {
         cout << "Graph's adjacency list:" << endl;
@@ -192,6 +191,42 @@ int main() {
     
     graph.shortestPath(0);
     graph.findMST(0);
+    
+    int choice;
+    do {
+        cout << "\n--- Water Distribution Network Menu ---" << endl;
+        cout << "[1] Display water distribution network" << endl;
+        cout << "[2] Check contaminant spread (BFS)" << endl;
+        cout << "[3] Plan inspection route (DFS)" << endl;
+        cout << "[4] Calculate shortest paths" << endl;
+        cout << "[5] Find Minimum Spanning Tree" << endl;
+        cout << "[0] Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                graph.printGraph();
+                break;
+            case 2:
+                graph.BFS(0);
+                break;
+            case 3:
+                graph.DFS(0, visited);
+                break;
+            case 4:
+                graph.shortestPath(0);
+                break;
+            case 5:
+                graph.findMST(0);
+                break;
+            case 0:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    } while (choice != 0);
   
     return 0;
 }
