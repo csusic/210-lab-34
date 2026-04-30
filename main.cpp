@@ -1,9 +1,10 @@
-// COMSC-210 | Lab 34 | Christine Susi
+// COMSC-210 | Lab 34 | Christine Susic
 
 #include <iostream>
 #include <vector>
 #include <stack>
 #include <queue>
+#include <climits>
 using namespace std;
 
 const int SIZE = 7;
@@ -70,6 +71,42 @@ public:
             }
         }
     }
+    
+    // --- Dijkstra's Algorithm for Shortest Path ---
+    void shortestPath(int startNode) {
+        // Priority queue to store (distance, vertex) pairs
+        priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+
+        // Vector for distances, initialized to infinity
+        vector<int> dist(SIZE, INT_MAX);
+
+        pq.push(make_pair(0, startNode));
+        dist[startNode] = 0;
+
+        while (!pq.empty()) {
+            int u = pq.top().second;
+            pq.pop();
+
+            for (auto &neighbor : adjList[u]) {
+                int v = neighbor.first;
+                int weight = neighbor.second;
+
+                if (dist[v] > dist[u] + weight) {
+                    dist[v] = dist[u] + weight;
+                    pq.push(make_pair(dist[v], v));
+                }
+            }
+        }
+
+        cout << "Shortest path from node " << startNode << ":" << endl;
+        for (int i = 0; i < SIZE; i++) {
+            if (dist[i] == INT_MAX)
+                cout << startNode << " -> " << i << " : INF" << endl;
+            else
+                cout << startNode << " -> " << i << " : " << dist[i] << endl;
+        }
+    }
+
 
     // Print the graph's adjacency list
     void printGraph() {
@@ -91,6 +128,7 @@ int main() {
         {0,1,11},{0,2,6},{2,6,4},{5,6,2},{4,5,7},{2,4,10},{2,5,7},
         //add six new nodes
         {0,4,9},{1,2,5},{2,3,3},{3,1,5},{3,4,7},{5,4,2}
+        
     };
 
     // Creates graph
