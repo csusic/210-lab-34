@@ -107,6 +107,50 @@ public:
         }
     }
 
+    // --- Prim's Algorithm for Minimum Spanning Tree ---
+    void findMST(int startNode) {
+        // Stores the edge used to reach each node: parent[dest] = src
+        vector<int> parent(SIZE, -1); 
+        // Stores the minimum weight to connect each node
+        vector<int> key(SIZE, INT_MAX); 
+    // Tracks nodes already included in the MST
+    vector<bool> inMST(SIZE, false); 
+
+    // Priority queue: <weight, vertex>
+    priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+
+    pq.push({0, startNode});
+    key[startNode] = 0;
+
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        pq.pop();
+
+        if (inMST[u]) continue;
+        inMST[u] = true;
+
+        for (auto &neighbor : adjList[u]) {
+            int v = neighbor.first;
+            int weight = neighbor.second;
+
+            // If v is not in MST and weight(u,v) is smaller than current key
+            if (!inMST[v] && weight < key[v]) {
+                key[v] = weight;
+                pq.push({key[v], v});
+                parent[v] = u;
+            }
+        }
+    }
+
+    // Print the resulting MST edges
+    cout << "Edges in Minimum Spanning Tree:" << endl;
+    for (int i = 0; i < SIZE; i++) {
+        if (parent[i] != -1) {
+            cout << parent[i] << " - " << i << " (Weight: " << key[i] << ")" << endl;
+        }
+    }
+}
+
 
     // Print the graph's adjacency list
     void printGraph() {
@@ -146,6 +190,7 @@ int main() {
     cout << endl;
     
     graph.shortestPath(0);
+    graph.findMST(0);
   
     return 0;
 }
