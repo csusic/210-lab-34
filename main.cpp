@@ -37,18 +37,6 @@ public:
             adjList[dest].push_back(make_pair(src, weight));
         }
     }
-    
-    // --- Depth First Search (Recursive) ---
-    void DFS(int v, vector<bool> &visited) {
-        visited[v] = true;
-        cout << v << " ";
-
-        for (Pair neighbor : adjList[v]) {
-            if (!visited[neighbor.first]) {
-                DFS(neighbor.first, visited);
-            }
-        }
-    }
 
     // --- Breadth First Search (Iterative) ---
     void BFS(int startNode) {
@@ -61,7 +49,6 @@ public:
         while (!q.empty()) {
             int v = q.front();
             q.pop();
-            cout << v << " ";
 
             for (Pair neighbor : adjList[v]) {
                 if (!visited[neighbor.first]) {
@@ -69,6 +56,64 @@ public:
                     q.push(neighbor.first);
                 }
             }
+        }
+        
+        cout << "\nCheck route spread (BFS) from Hub 0" << endl;
+        cout << "================================" << endl;
+        for (int i = 0; i < adjList.size(); i++) {
+            cout << "Checking from Hub " << i;
+            if (i == 0) cout << " (Central Facility)";
+            if (i == 1) cout << " (North Suburban Depot)";
+            if (i == 2) cout << " (West Industrial Park)";
+            if (i == 3) cout << " (Downtown Center)";
+            if (i == 4) cout << " (East Port Terminal)";
+            if (i == 5) cout << " (Airport)";
+            if (i == 6) cout << " (South Pier)";
+            cout << endl;
+            
+            if (adjList[i].empty()) {
+                cout << "  → No data available" << endl;
+            }
+
+            for (Pair v : adjList[i])
+                cout << "  → Next route available: " << v.first 
+                     << " - Transit Time: " << v.second << " min" << endl;
+            cout << endl;
+        }
+    }
+    
+    // --- Depth First Search (Recursive) ---
+    void DFS(int v, vector<bool> &visited) {
+        visited[v] = true;
+        cout << v << " ";
+
+        for (Pair neighbor : adjList[v]) {
+            if (!visited[neighbor.first]) {
+                DFS(neighbor.first, visited);
+            }
+        }
+        
+        cout << "\nPlan bus route (DFS) from Hub 0" << endl;
+        cout << "================================" << endl;
+        for (int i = 0; i < adjList.size(); i++) {
+            cout << "Routing from Hub " << i;
+            if (i == 0) cout << " (Central Facility)";
+            if (i == 1) cout << " (North Suburban Depot)";
+            if (i == 2) cout << " (West Industrial Park)";
+            if (i == 3) cout << " (Downtown Center)";
+            if (i == 4) cout << " (East Port Terminal)";
+            if (i == 5) cout << " (Airport)";
+            if (i == 6) cout << " (South Pier)";
+            cout << endl;
+            
+            if (adjList[i].empty()) {
+                cout << "  → No data available" << endl;
+            }
+
+            for (Pair v : adjList[i])
+                cout << "  → Potential route to " << v.first 
+                     << " - Transit Time: " << v.second << " min" << endl;
+            cout << endl;
         }
     }
     
@@ -98,7 +143,7 @@ public:
             }
         }
 
-        cout << "Shortest path from node " << startNode << ":" << endl;
+        cout << "\nShortest path from node " << startNode << ":" << endl;
         for (int i = 0; i < SIZE; i++) {
             if (dist[i] == INT_MAX)
                 cout << startNode << " -> " << i << " : INF" << endl;
@@ -142,18 +187,19 @@ public:
         }
     }
 
-    // Print the resulting MST edges
-    cout << "Minimum Spanning Tree edges:" << endl;
-    for (int i = 0; i < SIZE; i++) {
-        if (parent[i] != -1) {
-            cout << "Edge from " << parent[i] << " to " << i;
-            cout << " with capacity: " << key[i] << " units" << endl;
+        // Print the resulting MST edges
+        cout << "\nMinimum Spanning Tree edges:" << endl;
+        for (int i = 0; i < SIZE; i++) {
+            if (parent[i] != -1) {
+                cout << "Edge from " << parent[i] << " to " << i;
+                cout << " with capacity: " << key[i] << " units" << endl;
+            }
         }
     }
-}
+
     // Print the graph's adjacency list
     void printGraph() {
-        cout << "Bus Transit System:" << endl;
+        cout << "\nBus Transit System:" << endl;
         cout << "================================" << endl;
         for (int i = 0; i < adjList.size(); i++) {
             cout << "Hub " << i;
@@ -171,7 +217,7 @@ public:
             }
 
             for (Pair v : adjList[i])
-                cout << "  → Junction " << v.first 
+                cout << "  → Hub " << v.first 
                      << " (Transit Time: " << v.second << " min)" << endl;
             cout << endl;
         }
@@ -192,27 +238,23 @@ int main() {
 
     // Creates graph
     Graph graph(edges);
-
-    // Prints adjacency list representation of graph
     graph.printGraph();
-    
-    cout << "\nDFS starting from vertex 0: " << endl;
+            
+         
+    graph.BFS(0);
+           
+    //DFS
     vector<bool> visited(SIZE, false);
     graph.DFS(0, visited);
-
-    cout << "\nBFS starting from vertex 0: " << endl;
-    graph.BFS(0);
-    cout << endl;
     
-    graph.shortestPath(0);
-    graph.findMST(0);
+    
     
     int choice;
     do {
-        cout << "\n--- Water Distribution Network Menu ---" << endl;
-        cout << "[1] Display water distribution network" << endl;
-        cout << "[2] Check contaminant spread (BFS)" << endl;
-        cout << "[3] Plan inspection route (DFS)" << endl;
+        cout << "\n--- Bus Transit System Menu ---" << endl;
+        cout << "[1] Display bus transit system" << endl;
+        cout << "[2] Check route spread (BFS)" << endl;
+        cout << "[3] Plan bus route (DFS)" << endl;
         cout << "[4] Calculate shortest paths" << endl;
         cout << "[5] Find Minimum Spanning Tree" << endl;
         cout << "[0] Exit" << endl;
