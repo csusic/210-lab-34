@@ -202,15 +202,10 @@ int main() {
     // Creates graph
     Graph graph(edges);
     
-    graph.printGraph();
-    graph.BFS(0);
     //DFS
-    cout << "\nPlan bus route (DFS) from Hub 0" << endl;
-    cout << "================================" << endl;
     vector<bool> visited(SIZE, false);
-    graph.DFS(0, visited);
     
-    /*int choice;
+    int choice;
     do {
         cout << "\n--- Bus Transit System Menu ---" << endl;
         cout << "[1] Display bus transit system" << endl;
@@ -230,8 +225,8 @@ int main() {
                 graph.BFS(0);
                 break;
             case 3:
-                //cout << "\nPlan bus route (DFS) from Hub 0" << endl;
-                //cout << "================================" << endl;
+                cout << "\nPlan bus route (DFS) from Hub 0" << endl;
+                cout << "================================" << endl;
                 graph.DFS(0, visited);
                 break;
             case 4:
@@ -246,7 +241,7 @@ int main() {
             default:
                 cout << "Invalid choice!" << endl;
         }
-    } while (choice != 0);*/
+    } while (choice != 0);
   
     return 0;
 }
